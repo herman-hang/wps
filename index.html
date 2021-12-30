@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<script src="./js/config.js" type="text/javascript" charset="utf-8"></script>
+		<script src="./js/wpsjsrpcsdk.js" type="text/javascript" charset="utf-8"></script>
+		<script src="./js/wps.js" type="text/javascript" charset="utf-8"></script>
+		<title></title>
+	</head>
+	<body>
+
+	</body>
+	<script type="text/javascript">
+		window.onload = function() {
+ 			var filePath ="http://localhost/file/downloading/1466238954515861505"
+			var uploadPath = "http://localhost/file/wps/uploading"
+			var uploadFieldName = 'file'
+			var openName = '东方不败'
+			var publicationId = "a8abca50-aebb-45ba-9fbd-fb708d788949"
+			var token = "tdS1fAYnLCo0VJfi4dV5VEqmoSujVWpg7YGxCKCy0HHDg5yPWyWOJMhSuxRhAtShJ4nvTT7ECt84SJyrLK97fgQXlupVYYXvWnmXhwRbJxZIh8vJmJENuRCmivpFQBeq3RnszI8XqrvsQPKMEKVEQ6jk5fWnEMyLx7B1CidJn4Q0wWjV7P7liYQT2HaowJs5VjJTk2dCA5PUA1chTCXk8Zy4d60SdnG45fMzNtH1pFhZ46fqc44Ds0oxbQcuXRvc"
+			var openName = "测试.docx"
+			
+			_WpsInvoke([{
+				"OpenDoc": {
+					"uploadPath": uploadPath, // 保存文档上传接口(必填非空)
+					"fileName": filePath, // 下载文档接口(必填非空)
+					"uploadFieldName": uploadFieldName, // 上传文件字段(必填非空)
+					"userName": openName, // 打开文档用户(必填非空)
+					"publicationId":publicationId, // 清样ID
+					"headerToken": token ,// 登录Token(必填非空)
+					"openName":openName // 打开文档名称(不填会从响应头参数Content-Disposition中截取文件名，请确保该参数是不出问题，否则会打开文档失败)
+				}
+			}]) 
+		}
+	</script>
+</html>
