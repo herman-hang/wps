@@ -2,84 +2,84 @@
 
 //OA门户网站用接口,配置默认服务器接口
 var OA_DOOR = {
-    templateDataUrl: undefined, //正文模板列表接口
-    templateBaseURL: undefined, //指定正文模板基础接口
-    redHeadsPath: undefined, //默认红头模板列表获取路径
-    getRedHeadPath: undefined, //默认获取红头文件路径
-    bookmarkPath: undefined, //书签列表接口
-    redHeadsPath: undefined, //默认红头模板列表获取路径
+	templateDataUrl: undefined, //正文模板列表接口
+	templateBaseURL: undefined, //指定正文模板基础接口
+	redHeadsPath: undefined, //默认红头模板列表获取路径
+	getRedHeadPath: undefined, //默认获取红头文件路径
+	bookmarkPath: undefined, //书签列表接口
+	redHeadsPath: undefined, //默认红头模板列表获取路径
 }
 
 // --------------------------  通用方法  ---------------------------
 //去除字符串左边空格
-String.prototype.ltrim = function () {
-    return this.replace(/(^\s*)/g, "");
+String.prototype.ltrim = function() {
+	return this.replace(/(^\s*)/g, "");
 }
 
 //去除字符串右边空格
-String.prototype.rtrim = function () {
-    return this.replace(/(\s*$)/g, "");
+String.prototype.rtrim = function() {
+	return this.replace(/(\s*$)/g, "");
 }
 
 //扩展js string endwith,startwith方法
-String.prototype.endWith = function (str) {
-    if (str == null || str == "" || this.length == 0 || str.length > this.length)
-        return false;
-    if (this.substring(this.length - str.length) == str)
-        return true;
-    else
-        return false;
+String.prototype.endWith = function(str) {
+	if (str == null || str == "" || this.length == 0 || str.length > this.length)
+		return false;
+	if (this.substring(this.length - str.length) == str)
+		return true;
+	else
+		return false;
 }
 
-String.prototype.startWith = function (str) {
-    if (str == null || str == "" || this.length == 0 || str.length > this.length)
-        return false;
-    if (this.substr(0, str.length) == str)
-        return true;
-    else
-        return false;
+String.prototype.startWith = function(str) {
+	if (str == null || str == "" || this.length == 0 || str.length > this.length)
+		return false;
+	if (this.substr(0, str.length) == str)
+		return true;
+	else
+		return false;
 }
 
 //UTF-16转UTF-8
 function utf16ToUtf8(s) {
-    if (!s) {
-        return;
-    }
-    var i, code, ret = [],
-        len = s.length;
-    for (i = 0; i < len; i++) {
-        code = s.charCodeAt(i);
-        if (code > 0x0 && code <= 0x7f) {
-            //单字节
-            //UTF-16 0000 - 007F
-            //UTF-8  0xxxxxxx
-            ret.push(s.charAt(i));
-        } else if (code >= 0x80 && code <= 0x7ff) {
-            //双字节
-            //UTF-16 0080 - 07FF
-            //UTF-8  110xxxxx 10xxxxxx
-            ret.push(
-                //110xxxxx
-                String.fromCharCode(0xc0 | ((code >> 6) & 0x1f)),
-                //10xxxxxx
-                String.fromCharCode(0x80 | (code & 0x3f))
-            );
-        } else if (code >= 0x800 && code <= 0xffff) {
-            //三字节
-            //UTF-16 0800 - FFFF
-            //UTF-8  1110xxxx 10xxxxxx 10xxxxxx
-            ret.push(
-                //1110xxxx
-                String.fromCharCode(0xe0 | ((code >> 12) & 0xf)),
-                //10xxxxxx
-                String.fromCharCode(0x80 | ((code >> 6) & 0x3f)),
-                //10xxxxxx
-                String.fromCharCode(0x80 | (code & 0x3f))
-            );
-        }
-    }
+	if (!s) {
+		return;
+	}
+	var i, code, ret = [],
+		len = s.length;
+	for (i = 0; i < len; i++) {
+		code = s.charCodeAt(i);
+		if (code > 0x0 && code <= 0x7f) {
+			//单字节
+			//UTF-16 0000 - 007F
+			//UTF-8  0xxxxxxx
+			ret.push(s.charAt(i));
+		} else if (code >= 0x80 && code <= 0x7ff) {
+			//双字节
+			//UTF-16 0080 - 07FF
+			//UTF-8  110xxxxx 10xxxxxx
+			ret.push(
+				//110xxxxx
+				String.fromCharCode(0xc0 | ((code >> 6) & 0x1f)),
+				//10xxxxxx
+				String.fromCharCode(0x80 | (code & 0x3f))
+			);
+		} else if (code >= 0x800 && code <= 0xffff) {
+			//三字节
+			//UTF-16 0800 - FFFF
+			//UTF-8  1110xxxx 10xxxxxx 10xxxxxx
+			ret.push(
+				//1110xxxx
+				String.fromCharCode(0xe0 | ((code >> 12) & 0xf)),
+				//10xxxxxx
+				String.fromCharCode(0x80 | ((code >> 6) & 0x3f)),
+				//10xxxxxx
+				String.fromCharCode(0x80 | (code & 0x3f))
+			);
+		}
+	}
 
-    return ret.join('');
+	return ret.join('');
 
 }
 var Base64 = {
@@ -102,7 +102,8 @@ var Base64 = {
 			} else if (isNaN(i)) {
 				a = 64
 			}
-			t = t + this._keyStr.charAt(s) + this._keyStr.charAt(o) + this._keyStr.charAt(u) + this._keyStr.charAt(a)
+			t = t + this._keyStr.charAt(s) + this._keyStr.charAt(o) + this._keyStr.charAt(u) + this._keyStr
+				.charAt(a)
 		}
 		return t
 	},
@@ -174,70 +175,70 @@ var Base64 = {
 }
 //UTF-8转UTF-16
 function utf8ToUtf16(s) {
-    if (!s) {
-        return;
-    }
+	if (!s) {
+		return;
+	}
 
-    var i, codes, bytes, ret = [],
-        len = s.length;
-    for (i = 0; i < len; i++) {
-        codes = [];
-        codes.push(s.charCodeAt(i));
-        if (((codes[0] >> 7) & 0xff) == 0x0) {
-            //单字节  0xxxxxxx
-            ret.push(s.charAt(i));
-        } else if (((codes[0] >> 5) & 0xff) == 0x6) {
-            //双字节  110xxxxx 10xxxxxx
-            codes.push(s.charCodeAt(++i));
-            bytes = [];
-            bytes.push(codes[0] & 0x1f);
-            bytes.push(codes[1] & 0x3f);
-            ret.push(String.fromCharCode((bytes[0] << 6) | bytes[1]));
-        } else if (((codes[0] >> 4) & 0xff) == 0xe) {
-            //三字节  1110xxxx 10xxxxxx 10xxxxxx
-            codes.push(s.charCodeAt(++i));
-            codes.push(s.charCodeAt(++i));
-            bytes = [];
-            bytes.push((codes[0] << 4) | ((codes[1] >> 2) & 0xf));
-            bytes.push(((codes[1] & 0x3) << 6) | (codes[2] & 0x3f));
-            ret.push(String.fromCharCode((bytes[0] << 8) | bytes[1]));
-        }
-    }
-    return ret.join('');
+	var i, codes, bytes, ret = [],
+		len = s.length;
+	for (i = 0; i < len; i++) {
+		codes = [];
+		codes.push(s.charCodeAt(i));
+		if (((codes[0] >> 7) & 0xff) == 0x0) {
+			//单字节  0xxxxxxx
+			ret.push(s.charAt(i));
+		} else if (((codes[0] >> 5) & 0xff) == 0x6) {
+			//双字节  110xxxxx 10xxxxxx
+			codes.push(s.charCodeAt(++i));
+			bytes = [];
+			bytes.push(codes[0] & 0x1f);
+			bytes.push(codes[1] & 0x3f);
+			ret.push(String.fromCharCode((bytes[0] << 6) | bytes[1]));
+		} else if (((codes[0] >> 4) & 0xff) == 0xe) {
+			//三字节  1110xxxx 10xxxxxx 10xxxxxx
+			codes.push(s.charCodeAt(++i));
+			codes.push(s.charCodeAt(++i));
+			bytes = [];
+			bytes.push((codes[0] << 4) | ((codes[1] >> 2) & 0xf));
+			bytes.push(((codes[1] & 0x3) << 6) | (codes[2] & 0x3f));
+			ret.push(String.fromCharCode((bytes[0] << 8) | bytes[1]));
+		}
+	}
+	return ret.join('');
 
 }
 
 function currentTime() {
-    var now = new Date();
+	var now = new Date();
 
-    var year = now.getFullYear(); //年
-    var month = now.getMonth() + 1; //月
-    var day = now.getDate(); //日
+	var year = now.getFullYear(); //年
+	var month = now.getMonth() + 1; //月
+	var day = now.getDate(); //日
 
-    var hh = now.getHours(); //时
-    var mm = now.getMinutes(); //分
-    var ss = now.getSeconds();
-    var clock = year + "";
+	var hh = now.getHours(); //时
+	var mm = now.getMinutes(); //分
+	var ss = now.getSeconds();
+	var clock = year + "";
 
-    if (month < 10)
-        clock += "0";
+	if (month < 10)
+		clock += "0";
 
-    clock += month + "";
+	clock += month + "";
 
-    if (day < 10)
-        clock += "0";
+	if (day < 10)
+		clock += "0";
 
-    clock += day + "";
+	clock += day + "";
 
-    if (hh < 10)
-        clock += "0";
+	if (hh < 10)
+		clock += "0";
 
-    clock += hh + "";
-    if (mm < 10) clock += '0';
-    clock += mm;
-    if (ss < 10) clock += '0';
-    clock += ss;
-    return (clock);
+	clock += hh + "";
+	if (mm < 10) clock += '0';
+	clock += mm;
+	if (ss < 10) clock += '0';
+	clock += ss;
+	return (clock);
 }
 
 /**
@@ -245,20 +246,20 @@ function currentTime() {
  * @param {*} html 文件全称
  */
 function getHtmlURL(html) {
-    //弹出辅助窗格框
-    var GetUrlPath = ()=> {
-        var e = document.location.toString();
-        return -1 != (e = decodeURI(e)).indexOf("/") && (e = e.substring(0, e.lastIndexOf("/"))), e
-    }
+	//弹出辅助窗格框
+	var GetUrlPath = () => {
+		var e = document.location.toString();
+		return -1 != (e = decodeURI(e)).indexOf("/") && (e = e.substring(0, e.lastIndexOf("/"))), e
+	}
 
-    var url = GetUrlPath();
+	var url = GetUrlPath();
 
-    if (url.length != 0) {
-        url = url.concat("/" + html);
-    } else {
-        url = url.concat("./" + html);
-    }
-    return url;
+	if (url.length != 0) {
+		url = url.concat("/" + html);
+	} else {
+		url = url.concat("./" + html);
+	}
+	return url;
 }
 
 /**
@@ -269,18 +270,18 @@ function getHtmlURL(html) {
  * @param {*} width 窗口宽
  */
 function OnShowDialog(html, title, height, width, bModal) {
-    var l_ActiveDoc = wps.WpsApplication().ActiveDocument;
-    if (!l_ActiveDoc) {
-        alert("WPS当前没有可操作文档！")
-        return;
-    }
-    if (typeof bModal == "undefined" || bModal == null) {
-        bModal = true;
-    }
-    width *= window.devicePixelRatio;
-    height *= window.devicePixelRatio;
-    var url = getHtmlURL(html);
-    wps.ShowDialog(url, title, height, width, bModal);
+	var l_ActiveDoc = wps.WpsApplication().ActiveDocument;
+	if (!l_ActiveDoc) {
+		alert("WPS当前没有可操作文档！")
+		return;
+	}
+	if (typeof bModal == "undefined" || bModal == null) {
+		bModal = true;
+	}
+	width *= window.devicePixelRatio;
+	height *= window.devicePixelRatio;
+	var url = getHtmlURL(html);
+	wps.ShowDialog(url, title, height, width, bModal);
 }
 
 /**
@@ -289,11 +290,11 @@ function OnShowDialog(html, title, height, width, bModal) {
  * @return {*} body
  */
 function handleResultBody(resp) {
-    var result = "";
-    if (resp.Body) {
-        // 解析返回response的参数
-    }
-    return result;
+	var result = "";
+	if (resp.Body) {
+		// 解析返回response的参数
+	}
+	return result;
 }
 
 
@@ -302,118 +303,124 @@ function handleResultBody(resp) {
  * @param {*} name
  */
 function closeWpsIfNoDocument() {
-    var wpsApp = wps.WpsApplication();
-    var docs = wpsApp.Documents;
-    if (!docs || docs.Count == 0) {
-        wps.ApiEvent.Cancel = true;
-        //根据业务可以选择是否退出进程 wpsApp.Quit();
-    }
+	var wpsApp = wps.WpsApplication();
+	var docs = wpsApp.Documents;
+	if (!docs || docs.Count == 0) {
+		wps.ApiEvent.Cancel = true;
+		//根据业务可以选择是否退出进程 wpsApp.Quit();
+	}
 }
 
 function activeTab() {
-    //启动WPS程序后，默认显示的工具栏选项卡为ribbon.xml中某一tab
-    if (wps.ribbonUI)
-        wps.ribbonUI.ActivateTab('WPSWorkExtTab');
+	//启动WPS程序后，默认显示的工具栏选项卡为ribbon.xml中某一tab
+	if (wps.ribbonUI)
+		wps.ribbonUI.ActivateTab('WPSWorkExtTab');
 }
 
 function showOATab() {
-    wps.PluginStorage.setItem("ShowOATabDocActive", pCheckIfOADoc()); //根据文件是否为OA文件来显示OA菜单
-    wps.ribbonUI.Invalidate(); // 刷新Ribbon自定义按钮的状态
+	wps.PluginStorage.setItem("ShowOATabDocActive", pCheckIfOADoc()); //根据文件是否为OA文件来显示OA菜单
+	wps.ribbonUI.Invalidate(); // 刷新Ribbon自定义按钮的状态
 }
 
 function getDemoTemplatePath() {
-    var url = document.location.toString();
-    url = decodeURI(url);
-    if (url.indexOf("/") != -1) {
-        url = url.substring(0, url.lastIndexOf("/"));
-    }
-    if (url.length !== 0)
-        url = url.concat("/template/红头文件.docx");
+	var url = document.location.toString();
+	url = decodeURI(url);
+	if (url.indexOf("/") != -1) {
+		url = url.substring(0, url.lastIndexOf("/"));
+	}
+	if (url.length !== 0)
+		url = url.concat("/template/红头文件.docx");
 
-    if (url.startsWith("file:///"))
-        url = url.substr("file:///".length);
-    return url;
+	if (url.startsWith("file:///"))
+		url = url.substr("file:///".length);
+	return url;
 }
 
 function getDemoSealPath() {
-    var url = document.location.toString();
-    url = decodeURI(url);
-    if (url.indexOf("/") != -1) {
-        url = url.substring(0, url.lastIndexOf("/"));
-    }
-    if (url.length !== 0)
-        url = url.concat("/template/OA模板：公章.png");
+	var url = document.location.toString();
+	url = decodeURI(url);
+	if (url.indexOf("/") != -1) {
+		url = url.substring(0, url.lastIndexOf("/"));
+	}
+	if (url.length !== 0)
+		url = url.concat("/template/OA模板：公章.png");
 
-    if (url.startsWith("file:///"))
-        url = url.substr("file:///".length);
-    return url;
+	if (url.startsWith("file:///"))
+		url = url.substr("file:///".length);
+	return url;
 }
 
 function pGetParamName(data, attr) {
-    var start = data.indexOf(attr);
-    data = data.substring(start + attr.length);
-    return data;
+	var start = data.indexOf(attr);
+	data = data.substring(start + attr.length);
+	return data;
 }
 /**
  * 从requst中获取文件名（确保请求中有filename这个参数）
  * @param {*} request 
  * @param {*} url 
  */
- function pGetFileName(request, url) {
-    var disposition = request.getResponseHeader("Content-Disposition");
-    var filename = "";
-    if (disposition) {
-        var matchs = pGetParamName(disposition, "filename=");
-        if (matchs) {
-            filename = decodeURIComponent(matchs);
-        } else {
-            filename = "petro" + Date.getTime();
-        }
-    } else {
-        filename = url.substring(url.lastIndexOf("/") + 1);
-        filename=filename.split("?")[0]
-    }
-    return filename;
+function pGetFileName(request, url) {
+	var disposition = request.getResponseHeader("Content-Disposition");
+	var filename = "";
+	if (disposition) {
+		var matchs = pGetParamName(disposition, "filename=");
+		if (matchs) {
+			filename = decodeURIComponent(matchs);
+		} else {
+			filename = "petro" + Date.getTime();
+		}
+	} else {
+		filename = url.substring(url.lastIndexOf("/") + 1);
+		filename = filename.split("?")[0]
+	}
+	return filename;
 }
 
 function StringToUint8Array(string) {
-    var binLen, buffer, chars, i, _i;
-    binLen = string.length;
-    buffer = new ArrayBuffer(binLen);
-    chars = new Uint8Array(buffer);
-    for (var i = 0; i < binLen; ++i) {
-        chars[i] = String.prototype.charCodeAt.call(string, i);
-    }
-    return buffer;
+	var binLen, buffer, chars, i, _i;
+	binLen = string.length;
+	buffer = new ArrayBuffer(binLen);
+	chars = new Uint8Array(buffer);
+	for (var i = 0; i < binLen; ++i) {
+		chars[i] = String.prototype.charCodeAt.call(string, i);
+	}
+	return buffer;
 }
 /**
  * WPS下载文件到本地打开（业务系统可根据实际情况进行修改）
  * @param {*} url 文件流的下载路径
  * @param {*} callback 下载后的回调
+ * @param {*} openName 打开文档名称
+ * @param {*} token 登录token
  */
-function DownloadFile(url, callback, openName) {
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-			if(openName !== '' || openName !== null || openName !== undefined){
+function DownloadFile(url, callback, openName, token) {
+	var xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			if (openName !== '' || openName !== null || openName !== undefined) {
 				var fileName = openName;
-			}else{
+			} else {
 				//需要业务系统的服务端在传递文件流时，确保请求中的参数有filename
 				var fileName = pGetFileName(xhr, url)
 			}
-            //落地打开模式下，WPS会将文件下载到本地的临时目录，在关闭后会进行清理
-            var path = wps.Env.GetTempPath() + "/" + fileName
-            var reader = new FileReader();
-            reader.onload = function () {
-                wps.FileSystem.writeAsBinaryString(path, reader.result);
-                callback(path);
-            };
-            reader.readAsBinaryString(xhr.response);
-        }
-    }
-    xhr.open('GET', url);
-    xhr.responseType = 'blob';
-    xhr.send();
+			//落地打开模式下，WPS会将文件下载到本地的临时目录，在关闭后会进行清理
+			var path = wps.Env.GetTempPath() + "/" + fileName
+			var reader = new FileReader();
+			reader.onload = function() {
+				wps.FileSystem.writeAsBinaryString(path, reader.result);
+				callback(path);
+			};
+			reader.readAsBinaryString(xhr.response);
+		}
+	}
+	xhr.open('GET', url);
+	xhr.responseType = 'blob';
+	if (token !== null && token !== "" && token !== undefined) {
+		console.log(token);
+		xhr.setRequestHeader("x-gv-jwt-token", token);
+	}
+	xhr.send();
 }
 /**
  * WPS上传文件到服务端（业务系统可根据实际情况进行修改，为了兼容中文，服务端约定用UTF-8编码格式）
@@ -424,50 +431,57 @@ function DownloadFile(url, callback, openName) {
  * @param {*} OnSuccess 上传成功后的回调
  * @param {*} OnFail 上传失败后的回调
  */
-function UploadFile(strFileName, strPath, uploadPath, strFieldName, OnSuccess, OnFail, token, publicationId) {
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', uploadPath);
-    var fileData = wps.FileSystem.readAsBinaryString(strPath);
-    var data = new FakeFormData();
-    if (strFieldName == "" || typeof strFieldName == "undefined"){//如果业务方没定义，默认设置为'file'
-        strFieldName = 'file';
-    }
-    data.append(strFieldName, {
-        name: utf16ToUtf8(strFileName), //主要是考虑中文名的情况，服务端约定用utf-8来解码。
-        type: "application/octet-stream",
-        getAsBinary: function () {
-            return fileData;
-        }
-    });
-	if(publicationId !== null && publicationId !== "" && publicationId !== undefined){
-		data.append("publicationId", publicationId);
+function UploadFile(strFileName, strPath, uploadPath, strFieldName, OnSuccess, OnFail, token, id, accessoryType,
+fileId) {
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST', uploadPath);
+	var fileData = wps.FileSystem.readAsBinaryString(strPath);
+	var data = new FakeFormData();
+	if (strFieldName == "" || typeof strFieldName == "undefined") { //如果业务方没定义，默认设置为'file'
+		strFieldName = 'file';
+	}
+	data.append(strFieldName, {
+		name: utf16ToUtf8(strFileName), //主要是考虑中文名的情况，服务端约定用utf-8来解码。
+		type: "application/octet-stream",
+		getAsBinary: function() {
+			return fileData;
+		}
+	});
+	if (id !== null && id !== "" && id !== undefined) {
+		data.append("id", id);
+	}
+	if (accessoryType !== null && accessoryType !== "" && accessoryType !== undefined) {
+		data.append("accessoryType", accessoryType);
+	}
+	if (fileId !== null && fileId !== "" && fileId !== undefined) {
+		data.append("fileId", fileId);
 	}
 	data.append("fileType", 2);
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4) {
-            if (xhr.status == 200){
-				if(xhr.response == '' || xhr.response == null || xhr.response == undefined){
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState == 4) {
+			if (xhr.status == 200) {
+				if (xhr.response == '' || xhr.response == null || xhr.response == undefined) {
 					OnSuccess("success")
-				}else{
+				} else {
 					OnSuccess(xhr.response)
 				}
-			}else{
+			} else {
 				OnFail(xhr.response);
 			}
-        }
-    };
-    xhr.setRequestHeader("Cache-Control", "no-cache");
-    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-	if(token !== null && token !== "" && token !== undefined){
+		}
+	};
+	xhr.setRequestHeader("Cache-Control", "no-cache");
+	xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+	if (token !== null && token !== "" && token !== undefined) {
 		xhr.setRequestHeader("x-gv-jwt-token", token);
 	}
-    if (data.fake) {
-        xhr.setRequestHeader("Content-Type", "multipart/form-data; boundary=" + data.boundary);
-        var arr = StringToUint8Array(data.toString());
-        xhr.send(arr);
-    } else {
-        xhr.send(data);
-    }
+	if (data.fake) {
+		xhr.setRequestHeader("Content-Type", "multipart/form-data; boundary=" + data.boundary);
+		var arr = StringToUint8Array(data.toString());
+		xhr.send(arr);
+	} else {
+		xhr.send(data);
+	}
 }
 
 /**
@@ -475,12 +489,12 @@ function UploadFile(strFileName, strPath, uploadPath, strFieldName, OnSuccess, O
  * @param {*} p_Url 业务方接受请求的地址
  */
 function NotifyToServer(p_Url) {
-    $.ajax({
-        url: p_Url, //   URL + '/wps/wpsCanOpen',
-        async: true,
-        method: "post",
-        dataType: 'json'
-    });
+	$.ajax({
+		url: p_Url, //   URL + '/wps/wpsCanOpen',
+		async: true,
+		method: "post",
+		dataType: 'json'
+	});
 }
 
 /**
@@ -491,37 +505,37 @@ function NotifyToServer(p_Url) {
  * @param {*} state 0-正在编辑中 1-文件保存 2-文件关闭  状态可根据需要进行自定义扩展
  */
 function UpdateEditState(p_Url, p_OpenUrl, docId, state) {
-    var formData = {
-        "openUrl": p_OpenUrl,
-        "docId": docId,
-        "state": state
-    };
-    $.ajax({
-        url: p_Url, //URL + '/document/stateMonitor',
-        async: false,
-        data: formData,
-        method: "post",
-        dataType: 'json',
-        success: function (response) {
-            if (response == "success") {
-                console.log(response);
-            }
-        },
-        error: function (response) {
-            console.log(response);
-        }
-    });
+	var formData = {
+		"openUrl": p_OpenUrl,
+		"docId": docId,
+		"state": state
+	};
+	$.ajax({
+		url: p_Url, //URL + '/document/stateMonitor',
+		async: false,
+		data: formData,
+		method: "post",
+		dataType: 'json',
+		success: function(response) {
+			if (response == "success") {
+				console.log(response);
+			}
+		},
+		error: function(response) {
+			console.log(response);
+		}
+	});
 }
 
 /**
  * 作用：判断文档关闭后，如果系统已经没有打开的文档了，则设置回初始用户名
  */
 function pSetWPSAppUserName() {
-    //文档全部关闭的情况下，把WPS初始启动的用户名设置回去
-    if (wps.WpsApplication().Documents.Count == 1) {
-        var l_strUserName = wps.PluginStorage.getItem(constStrEnum.WPSInitUserName);
-        wps.WpsApplication().UserName = l_strUserName;
-    }
+	//文档全部关闭的情况下，把WPS初始启动的用户名设置回去
+	if (wps.WpsApplication().Documents.Count == 1) {
+		var l_strUserName = wps.PluginStorage.getItem(constStrEnum.WPSInitUserName);
+		wps.WpsApplication().UserName = l_strUserName;
+	}
 }
 
 /**
@@ -531,20 +545,20 @@ function pSetWPSAppUserName() {
  * @param {*} Value 
  */
 function SetDocParamsValue(Doc, Key, Value) {
-    if (!Doc || !Key) {
-        return;
-    }
+	if (!Doc || !Key) {
+		return;
+	}
 
-    var l_Params = wps.PluginStorage.getItem(Doc.DocID);
-    if (!l_Params) {
-        return;
-    }
+	var l_Params = wps.PluginStorage.getItem(Doc.DocID);
+	if (!l_Params) {
+		return;
+	}
 
-    var l_objParams = JSON.parse(l_Params);
-    if (!(typeof(l_objParams) == "undefined")) {
-        l_objParams[Key] = Value;
-    }
+	var l_objParams = JSON.parse(l_Params);
+	if (!(typeof(l_objParams) == "undefined")) {
+		l_objParams[Key] = Value;
+	}
 
-    //把属性值整体再写回原来的文档ID中
-    wps.PluginStorage.setItem(Doc.DocID, JSON.stringify(l_objParams));
+	//把属性值整体再写回原来的文档ID中
+	wps.PluginStorage.setItem(Doc.DocID, JSON.stringify(l_objParams));
 }

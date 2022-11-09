@@ -10,7 +10,7 @@ var pluginsMode = window.officeConfig.MODE; //0表示jsplugins.xml模式，1表�
  */
 //复制开始
 //    var curList = [{"name":"EtOAAssist","addonType":"et","online":"false","url":"http://127.0.0.1/jsplugindir/EtOAAssist.7z","version":"1.0.0"}]; //离线模式参考
-
+ 
 var curList = [{
 		"name": "WpsOAAssist",
 		"addonType": "wps",
@@ -95,7 +95,7 @@ function unInstallWpsAddinOne(callBack) {
 
 //唤起WPS
 function _WpsInvoke(funcs, front, jsPluginsXml, isSilent) {
-	var jsPluginsXml = jsPluginsXml ?? window.officeConfig.XML_URL;
+	var jsPluginsXml = jsPluginsXml ? jsPluginsXml : window.officeConfig.XML_URL;
 	var info = {};
 	info.funcs = funcs;
 	if (isSilent) { //隐藏启动时，front必须为false
@@ -119,16 +119,14 @@ function singleInvoke(info, front, jsPluginsXml, isSilent) {
 	WpsInvoke.InvokeAsHttp(pluginType, // 组件类型
 		pluginName, // 插件名，与wps客户端加载的加载的插件名对应
 		"dispatcher", // 插件方法入口，与wps客户端加载的加载的插件代码对应，详细见插件代码
-		info, // 传递给插件的数据        
+		info, // 传递给插件的数据
 		function(result) { // 调用回调，status为0为成功，其他是错误
-			console.log(result.status)
 			if (result.status) {
 				if (result.status == 100) {
 					WpsInvoke.AuthHttpesCert('请在稍后打开的网页中，点击"高级" => "继续前往"，完成授权。')
 					return;
 				}
 				alert(result.message)
-
 			} else {
 				console.log(result.response)
 			}

@@ -4,35 +4,73 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
-		<script src="./js/config.js" type="text/javascript" charset="utf-8"></script>
-		<script src="./js/wpsjsrpcsdk.js" type="text/javascript" charset="utf-8"></script>
-		<script src="./js/wps.js" type="text/javascript" charset="utf-8"></script>
-		<title></title>
+		<script type="text/javascript">
+			window.officeConfig = {
+				//0表示jsplugins.xml模式，1表示publish模式，2表示多进程加动态传递jsplugins.xml模式(使用0请到根目录下修改jsplugins.xml的url)
+				MODE: 1,
+				// WpsOAAssist路径，必须以“/”结尾
+				WPS_URL: "{$config['wps_open_api']}/static/wps/WpsOAAssist/",
+				// EtOAAssist路径，必须以“/”结尾
+				ETO_URL: '{$config['wps_open_api ']}/static/wps/EtOAAssist/',
+				// WppOAAssist路径，必须以“/”结尾
+				WPP_URL: '{$config['wps_open_api ']}/static/wps/WppOAAssist/',
+				// jsPlugins.xml文件路径
+				XML_URL: '{$config['wps_open_api ']}/static/wps/jsplugins.xml'
+			}
+		</script>
+		<script src="{$config['wps_open_api']}/static/wps/js/wpsjsrpcsdk.js" type="text/javascript" charset="utf-8">
+		</script>
+		<script src="{$config['wps_open_api']}/static/wps/js/wps.js" type="text/javascript" charset="utf-8">
+		</script>
+		<title>正在唤起WPS Office客户端</title>
 	</head>
 	<body>
-
+		<div style="height: 1048px;display: flex;justify-content: center;margin-top: 30px;font-size: 32px">
+			正在打开中(
+			<span id="seconds">20</span>
+			秒后自动关闭窗口)...
+		</div>
 	</body>
 	<script type="text/javascript">
 		window.onload = function() {
- 			var filePath ="http://localhost/file/downloading/1466238954515861505"
-			var uploadPath = "http://localhost/file/wps/uploading"
-			var uploadFieldName = 'file'
-			var openName = '东方不败'
-			var publicationId = "a8abca50-aebb-45ba-9fbd-fb708d788949"
-			var token = "tdS1fAYnLCo0VJfi4dV5VEqmoSujVWpg7YGxCKCy0HHDg5yPWyWOJMhSuxRhAtShJ4nvTT7ECt84SJyrLK97fgQXlupVYYXvWnmXhwRbJxZIh8vJmJENuRCmivpFQBeq3RnszI8XqrvsQPKMEKVEQ6jk5fWnEMyLx7B1CidJn4Q0wWjV7P7liYQT2HaowJs5VjJTk2dCA5PUA1chTCXk8Zy4d60SdnG45fMzNtH1pFhZ46fqc44Ds0oxbQcuXRvc"
-			var openName = "测试.docx"
-			
+			const downloadPath =
+				"{$config['wps_open_api']}{$config['wps_open_pass']}/file/wps/downloading/{$fileId}";
+			const uploadPath = "{$config['wps_open_api']}{$config['wps_open_pass']}/file/wps/uploading";
+			console.log(uploadPath)
+			const uploadFieldName = 'file';
+			const openName = "{$userInfo['name']}";
+			const id = "{$id}";
+			const token = "{$token}";
+			const openFileName = "{$file["
+			file_origin_name "]}";
+			const type = "{$type}";
+			const fileId = "{$fileId}";
 			_WpsInvoke([{
 				"OpenDoc": {
 					"uploadPath": uploadPath, // 保存文档上传接口(必填非空)
-					"fileName": filePath, // 下载文档接口(必填非空)
+					"fileName": downloadPath, // 下载文档接口(必填非空)
 					"uploadFieldName": uploadFieldName, // 上传文件字段(必填非空)
 					"userName": openName, // 打开文档用户(必填非空)
-					"publicationId":publicationId, // 清样ID
-					"headerToken": token ,// 登录Token(必填非空)
-					"openName":openName // 打开文档名称(不填会从响应头参数Content-Disposition中截取文件名，请确保该参数是不出问题，否则会打开文档失败)
+					"id": id, // 信息ID
+					"headerToken": token, // 登录Token(必填非空)
+					"openName": openFileName, // 打开文档名称(不填会从下载文档接口响应头参数Content-Disposition中截取文件名，请确保该参数是不出问题，否则会打开文档失败)
+					"accessoryType": type, // 信息类型
+					"fileId": fileId, // 文件ID
 				}
-			}]) 
+			}])
+			countdown(20);
+		}
+
+		const countdown = function(timeout) {
+			document.getElementById('seconds').innerHTML = timeout;
+			if (timeout == 0) {
+				window.close();
+			} else {
+				timeout--;
+				setTimeout(function() {
+					countdown(timeout)
+				}, 1000);
+			}
 		}
 	</script>
 </html>
